@@ -1,0 +1,163 @@
+!
+
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname Router2
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$lXV9$TmyDubIQVSaAj2SBFXBwY0
+!
+no aaa new-model
+memory-size iomem 5
+no ip icmp rate-limit unreachable
+ip cef
+!
+!
+!
+!
+no ip domain lookup
+ip domain name enterprise.local
+ip auth-proxy max-nodata-conns 3
+ip admission max-nodata-conns 3
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username admin privilege 15 secret 5 $1$i4v9$FbNkOyea7VNVFzd53qy4D.
+archive
+ log config
+  hidekeys
+! 
+!
+!
+!
+ip tcp synwait-time 5
+ip ssh time-out 60
+ip ssh version 2
+!
+!
+!
+!
+interface FastEthernet0/0
+ description Link_To_Router1
+ ip address 192.168.10.2 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ description Link_To_DSW2
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1.20
+ description SubInterface_HR_VLAN20
+ encapsulation dot1Q 20
+ ip address 192.168.22.1 255.255.255.0
+!
+interface FastEthernet0/1.30
+ description SubInterface_IT_VLAN30
+ encapsulation dot1Q 30
+ ip address 192.168.33.1 255.255.255.0
+ ip access-group PROTECT_IT in
+!
+interface FastEthernet1/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet2/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+router ospf 1
+ router-id 2.2.2.2
+ log-adjacency-changes
+ network 192.168.10.0 0.0.0.3 area 0
+ network 192.168.22.0 0.0.0.255 area 0
+ network 192.168.33.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+ip access-list extended PROTECT_IT
+ deny   ip 192.168.11.0 0.0.0.255 192.168.33.0 0.0.0.255
+ deny   ip 192.168.44.0 0.0.0.255 192.168.33.0 0.0.0.255
+ permit icmp 192.168.33.0 0.0.0.255 192.168.11.0 0.0.0.255
+ permit icmp 192.168.33.0 0.0.0.255 192.168.44.0 0.0.0.255
+ permit ip any any
+ deny   tcp 192.168.11.0 0.0.0.255 192.168.33.0 0.0.0.255
+ deny   tcp 192.168.44.0 0.0.0.255 192.168.33.0 0.0.0.255
+ permit icmp 192.168.44.0 0.0.0.255 192.168.33.0 0.0.0.255 echo-reply
+ permit icmp 192.168.11.0 0.0.0.255 192.168.33.0 0.0.0.255 echo-reply
+!
+access-list 10 permit 192.168.22.0 0.0.0.255
+access-list 10 deny   any
+no cdp log mismatch duplex
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+!
+banner motd  Authorized Access Only. Unauthorized access is prohibited. 
+!
+line con 0
+ exec-timeout 5 0
+ privilege level 15
+ password 7 050A02022842
+ logging synchronous
+ login
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ access-class 10 in
+ exec-timeout 5 0
+ login local
+ transport input ssh
+!
+!
+end
