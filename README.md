@@ -1,0 +1,2 @@
+# Week-4-Enterprise-Network-Security-and-Access-Control-LIsts
+Enterprise Network Security &amp; Access Control | Secured multi-VLAN topology in GNS3 for IT-SIMPLERA Solutions. Enforced Inter-VLAN Extended Named ACLs with ICMP inspection, SSH v2 2048-bit RSA encryption, and Layer 2 defenses (Port Security, DHCP Snooping, BPDU Guard). Includes Cisco IOS configs, topology files, and complete test reports.
