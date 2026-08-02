@@ -3,15 +3,17 @@ Week 4 Enterprise Network Security & Access Control Lists
 
 Author Information:
 -------------------
-Name: Hammad Zia
+* **Name**: Hammad Zia
 
-Reg No: NETB01-4259 
+* **Reg No**: NETB01-4259 
 
-Domain: Network Administration
+* **Domain**: Network Administration
 
-Organization: IT-Simplera Solutions
+* **Organization**: IT-Simplera Solutions
 
-Date of Submission: 24th July, 2026
+* **Date of Submission**: 24th July, 2026
+
+* **SSH ID/Pass**: ID: admin | Password: admin
 
 ------------------------------------------------------------------------
 
